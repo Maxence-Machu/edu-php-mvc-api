@@ -4,12 +4,10 @@ namespace App\Models;
 
 use PDO;
 
-/**
- * Example user model
- *
+/*
  * PHP version 7.0
  */
-class User extends \Core\Model
+class Countries extends \Core\Model
 {
 
     /**
@@ -20,7 +18,7 @@ class User extends \Core\Model
     public static function getAll()
     {
         $db = static::getDB();
-        $stmt = $db->query('SELECT id, name FROM users');
+        $stmt = $db->query('SELECT DISTINCT Name as name FROM country');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

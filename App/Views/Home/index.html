@@ -4,6 +4,144 @@
 
 {% block body %}
 
-    <h1>Welcome</h1>
+<div class="container">
+      
+    <section>
+      <h1>Cities I've visited</h1>
+      <table class="table table-striped">
+      <!--Table head-->
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Country</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+        <tbody>
+          <!-- Ligne d'exemple -->
+          <tr>
+            <td>Rouen</td>
+            <td>France</td>
+            <td><button class="btn btn-danger" onclick="">Delete</button></td>
+          </tr>
+            
+        </tbody>
+      <!--Table body-->
+      </table>      
+    </section>
+
+    <section>
+        <form>
+            <div class="row">
+
+              <div class="form-group col-md-4">
+                <label for="inputSearch">Search by name</label>
+                <input id="inputSearch" onkeyup='onChangeSearch(event)' type="text" class="form-control" placeholder="Your search (ex: Fran...)">
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="inputCountry">Country</label>
+                <select id="inputCountry" class="form-control"  onchange='onChangeCountry(event)'>
+                    <option disabled selected>Country</option>
+                    {% for country in countries %}
+                        <option value="{{country['name']}}">{{country['name']}}</option>
+                    {% endfor %}
+                  </select>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="inputLanguage">Language</label>
+                <select id="inputLanguage" class="form-control"  onchange='onChangeLanguage(event)'>
+                    <option disabled selected>Language</option>
+                    {% for language in langs %}
+                        <option value="{{language['name']}}">{{language['name']}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+            </div>
+          </form>
+    </section>
+
+    <section>
+        <h1>Cities list</h1>
+        <table class="table table-striped" id="cities-table">
+        <!--Table head-->
+          <thead>
+              <tr>
+                  <th>City</th>
+                  <th>Country</th>
+                  <th>Language</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+        <!--Table head-->
+
+        <!--Table body-->
+          <tbody id="cities-list">
+              {% for city in cities %}
+              <tr>
+                <td>{{city['name']}}</td>
+                <td>{{city['country']}}</td>
+                <td>{{city['language']}}</td>
+                <td><button class="btn btn-default" onclick="">Add</button></td>
+              </tr>
+              {% endfor %}
+          </tbody>
+        <!--Table body-->
+        </table>      
+      </section>
+
+
+
+  </div> <!-- End Section -->
+
+{% endblock %}
+
+{% block javascript %}
+  <script>
+        function onChangeSearch(e){
+            let value = e.target.value;
+            console.log(value);
+
+
+            // TODO //
+            // S'inspirer de la fonction onChangeCountry
+            // Afficher dans la console les villes en fonction de la requete de recherche
+        }
+
+        function onChangeLanguage(e){
+            let value = e.target.value;
+            console.log(value);
+
+            // TODO //
+            // S'inspirer de la fonction onChangeCountry
+            // Afficher dans la console les villes 
+        }
+
+        function onChangeCountry(e){
+            let value = e.target.value;
+            console.log(value);
+
+            $.ajax({
+                url: 'api/country',
+                type: "get", //send it through get method
+                data: {'country': value},
+                success: function(response){
+                    console.log(response)
+                },error: function(xhr) {
+                    console.error(xhr)
+                }
+            });
+        }
+
+        /*
+            TODO: Modifier l'affichage pour correspondre aux requêtes
+        */
+
+
+  </script>
 
 {% endblock %}
